@@ -13,10 +13,11 @@ function handleAddTodo() {
             ${inputVal}
             </span>
             <button onclick="deleteItem(this)">delete</button>
-            <button>edit</button>
+            <button onclick="editItem(this)">edit</button>
         </li>
         `
         root.innerHTML += template
+        input.value=''
     }
 }
 
@@ -28,18 +29,31 @@ function renderTodos() {
             ${item}
             </span>
             <button onclick="deleteItem(this)">delete</button>
-            <button>edit</button>
+            <button onclick="editItem(this)">edit</button>
         </li>
         `
     })
 
     const temp = template.join("")
-
     root.innerHTML = temp
 }
 function deleteItem(clickedElement) {
     clickedElement.parentElement.remove()
-
 }
-
+function editItem(clickedElement){
+    clickedElement.parentElement.innerHTML=`<li id="${clickedElement.parentElement.children[0].textContent}" style="color:red">
+        <input type="text" id="todo-input" value=${clickedElement.parentElement.children[0].textContent}>
+        <button onclick="handleAddTodoEdit(this)" id="submit-button">edit</button>
+        </li>`
+}
+function handleAddTodoEdit(clickedElement) {
+    const val=clickedElement.parentElement.children[0].value
+    clickedElement.parentElement.innerHTML=`<li id="${val}" style="color:red">
+            <span>
+                ${val}
+            </span>
+            <button onclick="deleteItem(this)">delete</button>
+            <button onclick="editItem(this)">edit</button>
+        </li>`
+}
 
